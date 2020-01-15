@@ -1,31 +1,33 @@
 const express = require('express');
 
-const Recipes = require('./recipe-model.js');
+const Tasks = require('./task-model.js');
 
 const router = express.Router();
 
 router.get('/', (req, res) => {
     
-    Recipes.getRecipes()
-        .then(recipes => {
-            res.json(recipes);
+    Tasks.getTasks()
+        .then(task => {
+            res.json(task);
         })
         .catch(err => {
-            res.status(500).json({ message: 'Failed to get recipes' });
+            res.status(500).json({ message: 'Failed to get tasks' });
         });
 });
 
 
-router.get('/:id/shoppingList', (req, res) => {
+router.post('/:id', (req, res) => {
 
-    const { id } = req.params;
-
-    Recipes.getShoppingList(id)
-    .then(recipes => {
-        res.json(recipes);
+    const project_id  = req.params;
+    const body_content = req.body;
+    
+    Tasks.addTask(project_id, body_content)
+    
+    .then(task => {
+        res.json(task);
     })
     .catch(err => {
-        res.status(500).json({ message: 'Failed to get shopping list' });
+        res.status(500).json({ message: 'Failed to add task' });
     });
 });
 
