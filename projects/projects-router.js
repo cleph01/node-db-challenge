@@ -8,8 +8,24 @@ const router = express.Router();
 router.get('/', (req, res) => {
     
     Projects.getProjects()
-        .then(recipes => {
-            res.json(recipes);
+        .then(project => {
+            
+            let data = project;
+
+            for(i = 0; i < data.length; i++){
+
+                if(data[i].completed === 0){
+
+                    data[i].completed = false
+
+                }else{
+
+                    data[i].completed = true
+
+                }
+            }
+
+            res.json(data);
         })
         .catch(err => {
             res.status(500).json({ message: 'Failed to get projects' });

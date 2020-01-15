@@ -8,6 +8,22 @@ router.get('/', (req, res) => {
     
     Tasks.getTasks()
         .then(task => {
+
+            let data = task;
+
+            for(i = 0; i < data.length; i++){
+
+                if(data[i]['Completed'] === 0){
+
+                    data[i]['Completed'] = false
+
+                }else{
+
+                    data[i].completed = true
+
+                }
+            }
+
             res.json(task);
         })
         .catch(err => {
@@ -31,33 +47,6 @@ router.post('/:id', (req, res) => {
     });
 });
 
-
-router.get('/:id/instructions', (req, res) => {
-    
-    const { id } = req.params;
-
-    Recipes.getInstructions(id)
-        .then(recipes => {
-            res.json(recipes);
-        })
-        .catch(err => {
-            res.status(500).json({ message: 'Failed to get recipe instructions' });
-        });
-});
-
-
-router.get('/ingredients/:id/recipes', (req, res) => {
-    
-    const { id } = req.params;
-
-    Recipes.getRecipes(id)
-        .then(recipes => {
-            res.json(recipes);
-        })
-        .catch(err => {
-            res.status(500).json({ message: 'Failed to get recipes' });
-        });
-});
 
 
 module.exports = router;
