@@ -32,19 +32,25 @@ router.get('/', (req, res) => {
 });
 
 
-router.post('/:id', (req, res) => {
+router.post('/:id', async (req, res) => {
+    
+    const data = await Tasks.addTask(req.body)
+    
+    
+    try {
+        
+        res.status(201).json(data)
 
-    const project_id  = req.params;
-    const body_content = req.body;
+    } catch (error) {
+        console.log(error)
+    }
     
-    Tasks.addTask(project_id, body_content)
-    
-    .then(task => {
-        res.json(task);
-    })
-    .catch(err => {
-        res.status(500).json({ message: 'Failed to add task' });
-    });
+    // data.then(task => {
+    //     res.json(task);
+    // })
+    // .catch(err => {
+    //     res.status(500).json({ message: 'Failed to add task' });
+    // });
 });
 
 

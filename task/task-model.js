@@ -14,22 +14,14 @@ function getTasks(){
 }
 
 
-function addTask(proj_id, body_content){
+function addTask(body_content){
 
-    const { project_id } = proj_id
 
-    const { description, notes } = body_content;
-
+    
     return db('task')
         .insert( body_content );
             
-    // return db('task')
-    //     .insert({
-    //             project_id: project_id,
-    //             description: description,
-    //             notes: notes
-    //         });
-
+  
 }
 
 module.exports = {
